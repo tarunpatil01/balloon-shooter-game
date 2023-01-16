@@ -9,7 +9,7 @@ pygame.init()
 width = 700
 height = 600
 display = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Copy Assingment - Balloon Shooter Game")
+pygame.display.set_caption("Balloon Shooter Game")
 clock = pygame.time.Clock()
 
 ''' Create variable for drawing and score '''
