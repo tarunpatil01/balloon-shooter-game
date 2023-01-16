@@ -6,15 +6,15 @@ from math import *
 
 ''' Create A Desktop Window '''
 pygame.init()
-width = 700
-height = 600
+width = 1400
+height = 800
 display = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Balloon Shooter Game")
+pygame.display.set_caption("Balloon Shooter Game PBL Project")
 clock = pygame.time.Clock()
 
 ''' Create variable for drawing and score '''
-margin = 100
-lowerBound = 100
+margin = 150
+lowerBound = 120
 score = 0
 
 ''' Generate random colors '''
@@ -29,36 +29,37 @@ yellow = (244, 208, 63)
 blue = (46, 134, 193)
 purple = (155, 89, 182)
 orange = (243, 156, 18)
+black = (0,0,0)
 
 
 ''' Set the general font of the project '''
-font = pygame.font.SysFont("Snap ITC", 35)
+font = pygame.font.SysFont("Algerian", 35)
 
 
 ''' Create a class to do all balloon related operations '''
 class Balloon:
     ''' Specify properties of balloons in start function '''
     def __init__(self, speed):
-        self.a = random.randint(30, 40)
-        self.b = self.a + random.randint(0, 10)
+        self.a = random.randint(50, 90)
+        self.b = self.a + random.randint(0, 50)
         self.x = random.randrange(margin, width - self.a - margin)
         self.y = height - lowerBound
-        self.angle = 90
+        self.angle = 200
         self.speed = -speed
-        self.proPool= [-1, -1, -1, 0, 0, 0, 0, 1, 1, 1]
-        self.length = random.randint(50, 100)
-        self.color = random.choice([red, green, purple, orange, yellow, blue])
+        self.proPool= [-1, -1, -1, 0, 0, 0, 2, 2, 2, 2]
+        self.length = random.randint(100, 100)
+        self.color = random.choice([red, green, purple, orange, yellow, blue, darkGray, darkBlue, lightGreen, lightBlue])
         
     ''' Animate balloons using mathematical operators '''
     def move(self):
         direct = random.choice(self.proPool)
 
         if direct == -1:
-            self.angle += -10
+            self.angle += -8
         elif direct == 0:
-            self.angle += 0
+            self.angle += 2
         else:
-            self.angle += 10
+            self.angle += 6
 
         self.y += self.speed*sin(radians(self.angle))
         self.x += self.speed*cos(radians(self.angle))
@@ -68,21 +69,21 @@ class Balloon:
                 self.x -= self.speed*cos(radians(self.angle)) 
             else:
                 self.reset()
-        if self.y + self.b < 0 or self.y > height + 30:
+        if self.y + self.b < 0 or self.y > height + 3:
             self.reset()
             
     ''' Show balloons on screen '''
     def show(self):
-        pygame.draw.line(display, darkBlue, (self.x + self.a/2, self.y + self.b), (self.x + self.a/2, self.y + self.b + self.length))
-        pygame.draw.ellipse(display, self.color, (self.x, self.y, self.a, self.b))
-        pygame.draw.ellipse(display, self.color, (self.x + self.a/2 - 5, self.y + self.b - 3, 10, 10))
+        pygame.draw.line(display, black, (self.x + self.a/2, self.y + self.b), (self.x + self.a/2, self.y + self.b + self.length))
+        pygame.draw.ellipse(display, self.color, (self.x, self.y, 2*self.a, 2*self.b))
+        pygame.draw.ellipse(display, self.color, (self.x + self.a/2 - 5, self.y + 2*self.b - 8, 10, 10))
             
     ''' Destroy by mouse click on the balloon '''
     def burst(self):
         global score
         pos = pygame.mouse.get_pos()
 
-        if isonBalloon(self.x, self.y, self.a, self.b, pos):
+        if isonBalloon(self.x, self.y, 2*self.a, 2*self.b, pos):
             score += 1
             self.reset()
     ''' The process of resetting the balloons '''            
@@ -95,7 +96,7 @@ class Balloon:
         self.speed -= 0.002
         self.proPool = [-1, -1, -1, 0, 0, 0, 0, 1, 1, 1]
         self.length = random.randint(50, 100)
-        self.color = random.choice([red, green, purple, orange, yellow, blue])
+        self.color = random.choice([red, green, purple, orange, yellow, blue, darkGray, darkBlue, lightGreen, lightBlue])
 
 ''' Create a list of balloons and set the number '''    
 balloons = []
@@ -104,7 +105,7 @@ noBalloon = 10
 
 ''' Insert balloons into list using for loop '''
 for i in range(noBalloon):
-    obj = Balloon(random.choice([1, 1, 2, 2, 2, 2, 3, 3, 3, 4]))
+    obj = Balloon(random.choice([5, 5, 5, 5, 6, 5, 3, 3, 3, 4]))
     balloons.append(obj)
 
 ''' Check the balloons '''
@@ -137,6 +138,7 @@ def lowerPlatform():
 def showScore():
     scoreText = font.render("Balloons Bursted : " + str(score), True, white)
     display.blit(scoreText, (150, height - lowerBound + 50))
+    
     
 ''' Create function to close the game '''
 def close():
