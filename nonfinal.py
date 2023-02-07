@@ -6,6 +6,7 @@ from math import *
 pause = False
 
 
+
 pygame.init()
 width = 1400
 height = 800
@@ -141,13 +142,24 @@ def lowerPlatform():
     
 
 def showScore():
-    scoreText = font.render("Balloons Bursted : " + str(score), True, white)
-    display.blit(scoreText, (150, height - lowerBound + 50))
+    scoreText = font.render("Balloons Bursted : " + str(score) + "                    Press R to Reset the Score", True, white)
+    scoretext = font.render("Press P to pause the Game",True,white)
+    display.blit(scoreText, (150, height - lowerBound + 60))
+    display.blit(scoretext, (710, height - lowerBound + 20))
+
+
+font1 = pygame.font.Font('pdark.ttf', 85)
+font2 = pygame.font.Font('pdark.ttf', 45)
 
 def is_paused():
-    is_paused = font.render("Paused" , True, black)
-    is_paused = font.render("Press C to continue or Q to Quit.",black,25)
-    display.blit(is_paused, (250, height - lowerBound ))
+    python = pygame.image.load('call of duty hd wallpapers call of duty hd wallpapers.jpg')
+    display.blit(python,(0,0))
+    is_paused = font2.render("Press C to continue",black,25)
+    is_paused2 = font2.render("Q to Quit",black,45)
+    display.blit(is_paused, (80,400 ))
+    display.blit(is_paused2, (170,480 ))
+    text = font1.render("PAUSED" ,black,90)
+    display.blit(text, (80, 45))
 
 def pause():
     global pause
@@ -204,7 +216,9 @@ def game():
                 for i in range(noBalloon):
                     balloons[i].burst()
 
-        display.fill(white)
+        python1 = pygame.image.load('wallpapersden.com_cloudy-field-paint_3840x2160.jpg')
+        display.blit(python1,(0,0))
+
         
         for i in range(noBalloon):
             balloons[i].show()
